@@ -12,7 +12,19 @@ message = 'Message'
 nomeAgente = 'Nome Agente'
 
 #legato a start
-listaAgenti = ['x','y','z','t','u','x','y','z','t','u','x','y','z','t','u']
+listaAgenti = {
+# Struttura listaAgenti: "NomeAgente",[URL posizione, Stato attività, Colore]
+    "Agente_002": ["Posizione",True,"#666666"],
+    "Agente_003": ["Posizione",True,"#6adbad"],
+    "Agente_007": ["Posizione",True,"#aded26"],
+    "Agente_012": ["Posizione",True,"#999999"],
+    "Agente_0993": ["Posizione",True,"#66acdf"],
+    "Agente_Agente 39": ["Posizione",True,"#FFF34b"],
+    "Agent 233": ["Posizione",True,"#666666"],
+    "NomeAgente1": ["Posizione",True,"#ccc666"],
+    "Agente_092age": ["Posizione",True,"#0acc34"]
+
+}
 
 
 #Costanti delle Classi / Tailwind dei bottoni
@@ -101,25 +113,70 @@ class Screen:
 
 
     ##################################################################################################################################################################################
-    # Eventi del mouse comuni per ogni icona
+    
+    
+    # Eventi del mouse comuni per ogni icona ---------------------------------------------
     def onIcona(self, msg):
         print('tocco icona')
         msg.target.fill='red'
+        #print(msg.target.components[0].d)
+
     def leaveIcona(self,msg):
         print('esco icona')
         msg.target.fill='currentColor'
 
-    # Eventi click che richiama la funzione corrispondente
+    # Eventi click che richiama la funzione corrispondente -------------------------------
     def onClickCode(self,msg):
         print('Apre il codice sorgente dell agente selezionato')
 
     def onClickPlay(self, msg):
         print('Agente Attivato')
         #Devo cambiare l'icona in quella di STOP
+        #Primo Step: Cancello tutti i Path
+        #print('Questo agente è in stato -->   ' , listaAgenti.get(msg.target.chiave)[1])
+        
+        #copiaValori = listaAgenti.get(msg.target.chiave)
+        #copiaValori[1] = False
+        #listaAgenti.update({msg.target.chiave : copiaValori})
+        listaAgenti[msg.target.chiave][1] = False
+        #print('Questo agente è in stato -->   ' , listaAgenti.get(msg.target.chiave)[1])
+
+
+        #listaAgenti[msg.target.chiave][1] = False
+        #print(listaAgenti[msg.target.chiave][1])
+        for element in msg.target.components:
+            #print(element)
+            msg.target.components.remove(element)
+        #Secondo Step: Cambio le componenti del SVG
+
+        msg.target.classes='bi bi-stop-fill'
+        msg.target.remove_event('click')
+
+        msg.target.on('click',self.onClickStop)
+        #print(msg.target.events)
+        #msg.target.click=self.onClickStop
+        #Terzo Step: Inserisco l'icona di STOP
+
+        jp.Path(a=msg.target, d='M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5z')
+        print('fine creazione path')
+
     
     def onClickStop(self, msg):
         print('Agente Disattivato')
         #Devo cambiare l'icona in quella di PLAY
+        listaAgenti[msg.target.chiave][1] = True
+        #print('Questo agente è in stato -->   ' , listaAgenti.get(msg.target.chiave)[1])
+        #Primo Step: Cancello tutti i Path
+        for element in msg.target.components:
+            #print(element)
+            msg.target.components.remove(element)
+        #Secondo Step: Cambio le componenti del SVG
+        msg.target.classes='bi bi-play-fill'
+        msg.target.remove_event('click')
+        
+        msg.target.on('click',self.onClickPlay)
+        #Terzo Step: Inserisco l'icona di STOP
+        jp.Path(a=msg.target, d='m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z')
 
 
 
@@ -135,9 +192,17 @@ class Screen:
         tastoDiv = jp.Div(a=msg.target, classes='block flex justify-evenly items-center py-3')
             # Play sulla Sinitra
         divPlay = jp.Div(a=tastoDiv, classes='flex-auto')
-        tastoPlay = jp.Svg(a=divPlay, xmlns='http://www.w3.org/2000/svg', viewBox='0 0 16 16', width='58', height='40', fill='currentColor', classes='bi bi-play-fill',mouseenter=self.onIcona, mouseleave=self.leaveIcona)
-        jp.Path(a=tastoPlay, d='m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z')
-            
+        #if listaAgenti.get(agente)[1]:
+        #       print("prova")
+        
+        print('Questo agente è in stato -->   ' , listaAgenti.get(msg.target.chiave)[1])
+        if listaAgenti.get(msg.target.chiave)[1]:
+
+            tastoPlay = jp.Svg(a=divPlay, xmlns='http://www.w3.org/2000/svg', viewBox='0 0 16 16', width='58', height='40', fill='currentColor', classes='bi bi-play-fill',mouseenter=self.onIcona, mouseleave=self.leaveIcona, click=self.onClickPlay, chiave=msg.target.chiave)
+            jp.Path(a=tastoPlay, d='m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z')
+        else:
+            tastoStop = jp.Svg(a=divPlay, xmlns='http://www.w3.org/2000/svg', viewBox='0 0 16 16', width='58', height='40', fill='currentColor', classes='bi bi-stop-fill',mouseenter=self.onIcona, mouseleave=self.leaveIcona, click=self.onClickStop, chiave=msg.target.chiave)
+            jp.Path(a=tastoStop, d='M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5z')
             
             # Code sulla destra
         divCode = jp.Div(a=tastoDiv, classes='flex-auto')
@@ -171,7 +236,7 @@ class Screen:
         msg.target.classes=agentiClasses
         msg.target.mouseenter=self.agEntra
         msg.target.mouseleave=self.agEsce
-        msg.target.text=msg.target.nome
+        msg.target.text=msg.target.chiave
         #print('USCITO')
     
     
@@ -181,7 +246,6 @@ class Screen:
         wp = jp.WebPage()
         wp.body_style='overflow:hidden'
         mainDiv = jp.Div(a=wp,classes='box-content bg-gray-700 h-screen border-4 w-screen flex')
-        
         ####### -------> Pulsantiera Sinistra
 
         subNavDiv = jp.Div(a=mainDiv,classes='h-64 inline-block left-0')
@@ -220,8 +284,8 @@ class Screen:
         # Al posto di questo jp.P, bisogna mettere la lista degli agenti che si trova all'interno della finestra.
 
         for agente in listaAgenti:
-            #Inizio Prova
-            x = jp.Div(a=agentsFrameDiv, classes=agentiClasses, text='nomeAgente', mouseenter=self.agEntra, mouseleave=self.agEsce, nome='nomeAgente')
+
+            x = jp.Div(a=agentsFrameDiv, classes=agentiClasses, text=agente, mouseenter=self.agEntra, mouseleave=self.agEsce, chiave=agente)
             
             #Fine Prova
             # 1) Non appena viene disegnato, dovrà mostrare il nome dell'agente
