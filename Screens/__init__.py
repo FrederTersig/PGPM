@@ -13,16 +13,16 @@ nomeAgente = 'Nome Agente'
 
 #legato a start
 listaAgenti = {
-# Struttura listaAgenti: "NomeAgente",[URL posizione, Stato attività, Colore]
-    "Agente_002": ["Posizione",True,"#666666"],
-    "Agente_003": ["Posizione",True,"#6adbad"],
-    "Agente_007": ["Posizione",True,"#aded26"],
-    "Agente_012": ["Posizione",True,"#999999"],
-    "Agente_0993": ["Posizione",True,"#66acdf"],
-    "Agente_Agente 39": ["Posizione",True,"#FFF34b"],
-    "Agent 233": ["Posizione",True,"#666666"],
-    "NomeAgente1": ["Posizione",True,"#ccc666"],
-    "Agente_092age": ["Posizione",True,"#0acc34"]
+# Struttura listaAgenti: "NomeAgente",[URL posizione, Stato attività, Colore, filtrato]
+    "Agente_002": ["Posizione",True,"#666666",True],
+    "Agente_003": ["Posizione",True,"#6adbad",True],
+    "Agente_007": ["Posizione",True,"#aded26",True],
+    "Agente_012": ["Posizione",True,"#999999",True],
+    "Agente_0993": ["Posizione",True,"#66acdf",True],
+    "Agente_Agente 39": ["Posizione",True,"#FFF34b",True],
+    "Agent 233": ["Posizione",True,"#666666",True],
+    "NomeAgente1": ["Posizione",True,"#ccc666",True],
+    "Agente_092age": ["Posizione",True,"#0acc34",True]
 
 }
 
@@ -217,22 +217,11 @@ class Screen:
         #print('ENTRATO ' + msg.target.nome)
     
     def agEsce(self,msg):
-        #print('###')
-        #print(self.text)
-        #self.text='Uscito'
-        #self.set_class='bg-red-200'
-        #print(msg.target)
-        #print(msg.target)
-
-        #print('disegno bottone')
+        
         for element in msg.target.components:
             #print(element)
             msg.target.components.remove(element)
-        #msg.target.remove_event('mouseleave')
-
-        #print('setto il suo stato iniziale')
-        #print(msg.target.events)
-        #print(msg.target.has_event_function('mouseleave'))
+        
         msg.target.classes=agentiClasses
         msg.target.mouseenter=self.agEntra
         msg.target.mouseleave=self.agEsce
@@ -286,31 +275,6 @@ class Screen:
         for agente in listaAgenti:
 
             x = jp.Div(a=agentsFrameDiv, classes=agentiClasses, text=agente, mouseenter=self.agEntra, mouseleave=self.agEsce, chiave=agente)
-            
-            #Fine Prova
-            # 1) Non appena viene disegnato, dovrà mostrare il nome dell'agente
-            # 2) Se ci passa il mouse, cambia e mostra il suo secondo aspetto
-            # 3) Non appena il mouse esce dall'area, l'agente ritorna nel primo stato
-
-
-            #jp.Button(a=agentsFrameDiv, classes=agentiClasses, text='nomeAgente')
-            #tastoAgente = jp.Div(a=agentsFrameDiv, classes=agentiOnMouseOver) #, text='nomeAgente')
-            #tastoDiv = jp.Div(a=tastoAgente, classes='block flex justify-evenly items-center py-3')
-            # Play sulla Sinitra
-            #divPlay = jp.Div(a=tastoDiv, classes='flex-auto')
-            #tastoPlay = jp.Svg(a=divPlay, xmlns='http://www.w3.org/2000/svg', viewBox='0 0 16 16', width='58', height='40', fill='currentColor', classes='bi bi-play-fill')
-            #jp.Path(a=tastoPlay, d='m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z')
-            
-            
-            # Code sulla destra
-            #divCode = jp.Div(a=tastoDiv, classes='flex-auto')
-            #tastoCode = jp.Svg(a=divCode, xmlns='http://www.w3.org/2000/svg', viewBox='0 0 16 16', width='58', height='34', fill='currentColor', classes='bi bi-code-square')
-            #jp.Path(a=tastoCode, d='M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z')
-            #jp.Path(a=tastoCode, d='M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z')
-
-            #Ogni bottone ha un suo specifico evento (MouseEnter per il cambio colore, Click per il trigger della funzione corrispondente)
-
-
 
         #Pulsantiera delle azioni del log
         actionStartDiv = jp.Div(a=subFrameDiv, classes='block h-16 w-full')
@@ -336,84 +300,109 @@ class Screen:
 
 
     ##########################################################
-    #Codice Schermata di configurazione
+    #Codice Schermata di configurazione del filtro
+
+
 
     def filterScreen(self):
         wp = jp.WebPage()
         wp.body_style='overflow:hidden'
         mainDiv = jp.Div(a=wp,classes='box-content bg-gray-700 h-screen border-4 w-screen flex')
-        
         ####### -------> Pulsantiera Sinistra
-
         subNavDiv = jp.Div(a=mainDiv,classes='h-64 inline-block left-0')
-
         #- icona per il tasto V -#
         rejectButton = jp.A(href='/log', a=subNavDiv, classes=rejectClasses)
         #rejectButton = jp.Button(a=subNavDiv, classes=rejectClasses)
         rejectIcon = jp.Svg(a=rejectButton, viewBox='0 -2 16 20', xmlns='http://www.w3.org/2000/svg', classes='bi bi-x-lg', fill='currentColor',width='64',height='64')
         rejectPath = jp.Path(a=rejectIcon, d='M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z')
-
-
-        #da cancellare
-        #acceptButton = jp.Button(a=subNavDiv, classes=buttonClasses)
-        #acceptIcon = jp.Svg(a=acceptButton,viewBox='0 -2 16 20', xmlns='http://www.w3.org/2000/svg', classes='bi bi-check-lg', fill='currentColor',width='64',height='64')
-        #pathAcceptIcon = jp.Path(d='M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z', a=acceptIcon)
         ####### -------> Fine Pulsantiera Sinistra
-
         ####### -------> Parte Centrale: Log
-
         #Frame dei bottoni
         frameDiv = jp.Div(a=mainDiv, classes='inline-block w-full h-full overflow-hidden')
         subFrameDiv = jp.Div(a=frameDiv, classes='mt-2 h-full space-y-4')
-
         #Parte superiore: Titolo
         titleFrameDiv = jp.Div(a=subFrameDiv, classes='block h-16 w-full pt-4')
         spanTitleFrame = jp.Span(a=titleFrameDiv, classes='align-middle')
         jp.P(a=spanTitleFrame, classes='text-center font-black text-3xl subpixel-antialiased text-white', text='Imposta Filtro')
-
         #Parte centrale: Lista degli agenti                                           
         agentsFrameDiv = jp.Div(a=subFrameDiv,style=f'height:80%; width:100%;', classes='block w-full bg-blue-900 overflow-y-scroll p-2 border-2 border-white rounded-md flex flex-wrap justify-center content-start')
         #jp.P(a=agentsFrameDiv, classes='subpixel-antialiased text-white break-words', text='> '+timestamp+' | '+message+' | '+nomeAgente)
         # Al posto di questo jp.P, bisogna mettere la lista degli agenti che si trova all'interno della finestra.
         for agente in listaAgenti:
-            jp.Button(a=agentsFrameDiv, classes=agentiClasses, text='nomeAgente')
-
-
+            x = jp.Button(a=agentsFrameDiv, classes=agentiClasses, text=agente, mouseenter=self.filtroAgEntra, mouseleave=self.filtroAgEsce, chiave=agente)
 
         #Pulsantiera delle azioni del log
         actionStartDiv = jp.Div(a=subFrameDiv, classes='block h-16 w-full')
         bottoniStartDiv = jp.Div(a=actionStartDiv, classes='block flex justify-around')
-        #addAgentButton = jp.Button(text='Aggiungi Agente', a=bottoniStartDiv, classes=actionButtonClasses)
         resetFilterButton = jp.Button(text='Pulisci Filtro', a=bottoniStartDiv, classes=actionButtonClasses)
-
         #Eventuale altra fila di bottoni
         ####### -------> Fine Parte Centrale: Log
-
         ####### -------> Parte Destra: Tasto Filtro
-
         #Menu Destro (Tasto di 'partenza')
         dxButtonsDiv = jp.Div(a=mainDiv,classes='h-64 inline-block w-22') #Aumento la width così da sistemare al meglio la posizione dei bottoni
         #bottone reject al lato destro (X)
         #<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
         #  <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
         #</svg>
-
         acceptButton = jp.Button(a=dxButtonsDiv, classes=acceptClasses)
         acceptIcon = jp.Svg(a=acceptButton,viewBox='0 -2 16 20', xmlns='http://www.w3.org/2000/svg', classes='bi bi-check-lg', fill='currentColor',width='64',height='64')
         pathAcceptIcon = jp.Path(d='M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z', a=acceptIcon)
-
         #da cancellare
         #rejectButton = jp.Button(a=dxButtonsDiv, classes=buttonClasses)
         #rejectIcon = jp.Svg(a=rejectButton, viewBox='0 -2 16 20', xmlns='http://www.w3.org/2000/svg', classes='bi bi-x-lg', fill='currentColor',width='64',height='64')
         #rejectPath = jp.Path(a=rejectIcon, d='M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z')
-        
         ####### -------> Fine Parte Destra: Tasto Filtro
-
         return wp
 
 #jp.justpy(html_compo)
     
     #Lista di Eventi
+    def onClickRimuovi(self,msg):
+        print('rimuovi agente da filtro')
+        
+    def onClickAggiungi(self,msg):
+        print('aggiungi agente da filtro')
+
+    def filtroAgEntra(self,msg):
+        print('entra in filtro')
+        msg.target.text=''
+        msg.target.classes=agentiOnMouseOver
+
+        tastoDiv = jp.Div(a=msg.target, classes='block flex justify-evenly items-center py-3')
+            # Play sulla Sinitra
+        divPlay = jp.Div(a=tastoDiv, classes='flex-auto')
+        #if listaAgenti.get(agente)[1]:
+        #       print("prova")
+        
+        print('Questo agente fa parte del filtro -->   ' , listaAgenti.get(msg.target.chiave)[3])
+        if listaAgenti.get(msg.target.chiave)[3]:
+            #Metti il MENO
+            tastoRimuovi = jp.Svg(a=divPlay, xmlns='http://www.w3.org/2000/svg', viewBox='0 0 16 16', width='58', height='40', fill='currentColor', classes='bi bi-dash-circle-fill',mouseenter=self.onIcona, mouseleave=self.leaveIcona, click=self.onClickRimuovi, chiave=msg.target.chiave)
+            jp.Path(a=tastoRimuovi, d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z')
+            
+        else:
+            #Metti il PIU
+            tastoAggiungi = jp.Svg(a=divPlay, xmlns='http://www.w3.org/2000/svg', viewBox='0 0 16 16', width='58', height='40', fill='currentColor', classes='bi bi-plus-circle-fill',mouseenter=self.onIcona, mouseleave=self.leaveIcona, click=self.onClickAggiungi, chiave=msg.target.chiave)
+            jp.Path(a=tastoAggiungi, d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z')
+            
+            # Code sulla destra
+        divCode = jp.Div(a=tastoDiv, classes='flex-auto')
+        tastoCode = jp.Svg(a=divCode, xmlns='http://www.w3.org/2000/svg', viewBox='0 0 16 16', width='58', height='34', fill='currentColor', classes='bi bi-code-square')
+        jp.Path(a=tastoCode, d='M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z')
+        jp.Path(a=tastoCode, d='M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z')
+
+
+    def filtroAgEsce(self,msg):
+        
+        for element in msg.target.components:
+            #print(element)
+            msg.target.components.remove(element)
+        
+        msg.target.classes=agentiClasses
+        msg.target.mouseenter=self.filtroAgEntra
+        msg.target.mouseleave=self.filtroAgEsce
+        msg.target.text=msg.target.chiave
+        #print('USCITO')
 
     def showAgentButtons(self):
         print('prova')
