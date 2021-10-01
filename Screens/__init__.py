@@ -359,9 +359,32 @@ class Screen:
     #Lista di Eventi
     def onClickRimuovi(self,msg):
         print('rimuovi agente da filtro')
+        #Devo cambiare l'icona in quella di PLAY
+        listaAgenti[msg.target.chiave][3] = False
+        #Primo Step: Cancello tutti i Path
+        for element in msg.target.components:
+            #print(element)
+            msg.target.components.remove(element)
+        #Secondo Step: Cambio le componenti del SVG
+        msg.target.classes='bi bi-dash-plus-fill'
+        msg.target.remove_event('click')
+        
+        msg.target.on('click',self.onClickAggiungi)
+        #Terzo Step: Inserisco l'icona di PIU
+        jp.Path(a=msg.target, d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z')
         
     def onClickAggiungi(self,msg):
         print('aggiungi agente da filtro')
+        listaAgenti[msg.target.chiave][3] = True
+        for element in msg.target.components:
+            msg.target.components.remove(element)
+        #Secondo Step: Cambio le componenti del SVG
+        msg.target.classes='bi bi-dash-circle-fill'
+        msg.target.remove_event('click')
+        msg.target.on('click',self.onClickRimuovi)
+        #Terzo Step: Inserisco l'icona di Meno
+        jp.Path(a=msg.target, d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z')
+        print('fine creazione path')
 
     def filtroAgEntra(self,msg):
         print('entra in filtro')
@@ -387,11 +410,14 @@ class Screen:
             
             # Code sulla destra
         divCode = jp.Div(a=tastoDiv, classes='flex-auto')
-        tastoCode = jp.Svg(a=divCode, xmlns='http://www.w3.org/2000/svg', viewBox='0 0 16 16', width='58', height='34', fill='currentColor', classes='bi bi-code-square')
-        jp.Path(a=tastoCode, d='M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z')
-        jp.Path(a=tastoCode, d='M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z')
+        tastoCode = jp.Input(type='color', a=divCode, classes='', style='width: 40px; height: 40px', input=self.cambioColore, debounce=30)
+        #tastoCode = jp.Svg(a=divCode, xmlns='http://www.w3.org/2000/svg', viewBox='0 0 16 16', width='58', height='34', fill='currentColor', classes='bi bi-eyedropper')
+        #jp.Path(a=tastoCode, d='M13.354.646a1.207 1.207 0 0 0-1.708 0L8.5 3.793l-.646-.647a.5.5 0 1 0-.708.708L8.293 5l-7.147 7.146A.5.5 0 0 0 1 12.5v1.793l-.854.853a.5.5 0 1 0 .708.707L1.707 15H3.5a.5.5 0 0 0 .354-.146L11 7.707l1.146 1.147a.5.5 0 0 0 .708-.708l-.647-.646 3.147-3.146a1.207 1.207 0 0 0 0-1.708l-2-2zM2 12.707l7-7L10.293 7l-7 7H2v-1.293z')
 
-
+    def cambioColore(self,msg):
+        print('provo a cambiare colore: ')
+        print(msg.target.value)
+        print('Fine cambio colore')
     def filtroAgEsce(self,msg):
         
         for element in msg.target.components:
