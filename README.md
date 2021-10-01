@@ -6,7 +6,11 @@ Questa interfaccia è scritta in Python usando JustPy come Framework per l'integ
 
 Per far partire il progetto bisognerà prima di tutto creare un nuovo progetto JustPy, dopodichè bisognerà farlo partire ogni volta da terminale.
 
-Creazione di un nuovo progetto Justpy:
+
+
+
+
+1) Creazione di un nuovo progetto Justpy:
 
 CD per entrare nella cartella del progetto
 
@@ -19,7 +23,12 @@ pip install justpy
 exit
 
 
-Per far partire il progetto:
+
+
+
+
+
+2) Per far partire il progetto:
 
 cd per entrare nella cartella del progetto
 
