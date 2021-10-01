@@ -9,13 +9,20 @@ Per far partire il progetto bisognerà prima di tutto creare un nuovo progetto J
 Creazione di un nuovo progetto Justpy:
 
 CD per entrare nella cartella del progetto
+
 python3 -m venv jp 
+
 source jp/bin/activate
+
 pip install justpy
+
 exit
 
 
 Per far partire il progetto:
+
 cd per entrare nella cartella del progetto
+
 source jp/bin/activate
+
 python3 main.py
