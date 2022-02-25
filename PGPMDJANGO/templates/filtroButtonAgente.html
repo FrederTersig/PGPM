@@ -1,0 +1,27 @@
+<button style="background-color:{{colore}}" class='inline-block truncate text-center rounded w-48 h-20 m-2 bg-[#FFFFFF] text-black border-black border container' id={{nome}}>
+	
+	<div class='block flex justify-evenly items-center py-3'><!-- tastoDiv Due icone da inserire--> 
+		<div class='flex-auto' hx-post="/setFilter/" hx-trigger="click once" hx-swap="outerHTML" hx-include="[name='{{nome}}']" hx-target="#{{nome}}"><!-- divPlay -->
+			
+			<!-- Icona di rimozione dell'agente nel filtro -->
+			{% if filtro == 1 %}
+			{% include "icons/icon_disattivaFiltro.html" %}
+			{% else %}
+			<!-- Icona di aggiunta dell'agente nel filtro -->
+			{% include "icons/icon_attivaFiltro.html" %}
+			
+			{% endif %}
+
+		</div>
+		<div class='flex-auto'>
+			
+			<input type='color' class="border" style="width: 40px; height: 40px" hx-post="/editColor/" hx-swap="outerHTML" hx-trigger="change" name='nuovoColore' value="{{colore}}" hx-include="[name='{{nome}}']" hx-target=#{{nome}} />
+			
+		</div>
+		
+	</div>
+	<input type='hidden' value='{{colore}}' name='{{nome}}'/>
+	<input type='hidden' value={{stato}} name='{{nome}}'/>
+	<input type='hidden' value={{filtro}} name='{{nome}}'/>
+
+</button>

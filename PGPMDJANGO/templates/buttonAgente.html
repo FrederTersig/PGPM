@@ -1,0 +1,27 @@
+<button style="background-color:{{colore}}" class='inline-block truncate text-center rounded w-48 h-20 m-2 bg-[#FFFFFF] text-black border-black border container' id="divAgente" hx-get="/buttonAgenteBack" hx-trigger="mouseleave once" hx-swap="outerHTML" hx-include="[name='{{nome}}']">
+
+	<div class='block flex justify-evenly items-center py-3'><!-- tastoDiv -->
+		<div class='flex-auto' hx-post="/setStato/" hx-trigger="click once" hx-swap="outerHTML" hx-include="[name='{{nome}}']" hx-target='#divAgente' ><!-- divPlay -->
+			<!-- Parte del tasto Play/stop -->
+			{% if stato == 1 %}
+			{% include "icons/icon_attivaStato.html" %}
+			{% else %}
+			
+			{% include "icons/icon_disattivaStato.html" %}
+
+			{% endif %}
+
+		</div>
+		<div class="flex-auto" hx-post='/deleteAgente/' hx-trigger="click once" hx-swap="outerHTML" hx-include="[name='{{nome}}']" hx-target='#MainDiv'>
+			{% include "icons/icon_cancellaAgente.html" %}
+		</div>
+		<a href=linkAgente class='flex-auto' hx-get="/start/{{nome}}/" hx-trigger="click once" hx-swap="outerHTML" hx-include="[name='{{nome}}']" hx-target='#MainDiv'><!-- divCode -->
+
+			{% include "icons/icon_editorAgente.html" %}
+			
+		</a>
+		<input type='hidden' value='{{colore}}' name='{{nome}}'/>
+		<input type='hidden' value='{{stato}}' name='{{nome}}'/>
+		<input type='hidden' value='{{filtro}}' name='{{nome}}'/>
+	</div>
+</button>
