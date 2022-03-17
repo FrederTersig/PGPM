@@ -1,8 +1,0 @@
-{% for log in listaLog %}
-                    {% if log.1 == 'alert' %}
-                        <p style='background-color: #c51f1f;' class='subpixel-antialiased text-white break-words font-black text-lg'>{{log.0}}</p>
-                    {% else %}
-                        <p style='background-color: {{log.1}};' class='subpixel-antialiased text-white break-words font-black text-lg'>{{log.0}}</p>
-                    {% endif %}
-                                  
-                {% endfor %}
