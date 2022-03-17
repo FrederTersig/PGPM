@@ -1,0 +1,67 @@
+<!-- templates/index.html -->
+
+{% extends "_base.html" %}
+
+{% block content %}
+  
+  <!-- codice HTML LogScreen -->
+  <div id='MainDiv' class='box-content bg-gray-700 h-screen border-4 w-screen flex'><!-- MainDiv -->
+      <div class='h-64 inline-block left-0'><!--subNavDiv-->
+          <div hx-trigger='click once' hx-target='#MainDiv' hx-get='/stopLog/' hx-swap='outerHTML' class='block rounded w-16 h-16 m-2 bg-blue-600 text-white hover:bg-white focus:outline-white hover:text-gray-800'>
+            
+            {% include "icons/icon_startRun.html" %}
+          </div>
+      </div>
+      <!-- ################################ -->
+      <div class='inline-block w-full h-full overflow-hidden'><!-- FrameDiv-->
+          <div class='mt-2 h-full space-y-4'><!-- subFrameDiv -->
+              <div class='block h-16 w-full pt-4'><!--title-->
+                  <span class='align-middle'>
+                    <p class='text-center font-black text-3xl subpixel-antialiased text-white'>Schermata dei Log</p>
+                  </span>
+                    <div class='w-full flex justify-between'>
+                      <div class='text-left inline-block '>
+                      {% if email %}
+                        <p class='m-1 text-white font-black text-left'>Connesso come: {{email}}</p>
+                      {% else %}
+                        <p class='m-1 text-white font-black text-left'>Visitatore, logga qui</p>
+                      {% endif %}
+                      </div>
+                      <div class='text-right inline-block'>
+                      {% if path %}
+                        <p class='m-1 text-white font-black text-right px-2'>Nome Del Path: {{nomePath}} - Path Inserito: {{path}}</p>
+                      {% else %}
+                        <p class='m-1 text-white font-black text-right px-2'>Nessun Path Inserito</p>
+                      {% endif %}
+                      </div>
+                    </div>
+              </div>
+
+              <div style='height:80%; width:100%;' id='LogFrameDiv' class='block divide-y divide-white divide-opacity-25 w-full bg-blue-900 space-y-2 overflow-y-scroll p-2 border-2 border-white rounded-md' hx-trigger='every 50ms' hx-get='/updateLog/' hx-swap='outerHTML'><!--LogFrameDiv-->
+                {% for log in listaLog %}
+                    {% if log.1 == 'alert' %}
+                        <p style='background-color: #c51f1f;' class='subpixel-antialiased text-white break-words font-black text-lg text-left'>{{log.0}}</p>
+                    {% else %}
+                        <p style='background-color: {{log.1}};' class='subpixel-antialiased text-white break-words font-black text-lg text-left'>{{log.0}}</p>
+                    {% endif %}
+                                  
+                {% endfor %}
+              </div>
+
+              <div class='block h-16 w-full'><!--ActionStart-->
+                  <div class='block flex justify-around'><!--BottoniStart-->
+
+                  </div>
+              </div>
+
+          </div>
+      </div>
+
+      <div class='h-64 inline-block w-22'><!--dxButtons-->
+
+      </div>
+  </div>
+
+
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+<div style='height:80%; width:100%;' id='LogFrameDiv' class='block divide-y divide-white divide-opacity-25 w-full bg-blue-900 space-y-2 overflow-y-scroll p-2 border-2 border-white rounded-md' hx-trigger='every 50ms' hx-get='/updateLog/' hx-swap='outerHTML'><!--LogFrameDiv-->
+                {% for log in listaLog %}
+                    {% if log.1 == 'alert' %}
+                        <p style='background-color: #c51f1f;' class='subpixel-antialiased text-white break-words font-black text-lg text-left'>{{log.0}}</p>
+                    {% else %}
+                        <p style='background-color: {{log.1}};' class='subpixel-antialiased text-white break-words font-black text-lg text-left'>{{log.0}}</p>
+                    {% endif %}
+                                  
+                {% endfor %}
+</div>
+<!--
+{% for log in listaLog %}
+                    {% if log.1 == 'alert' %}
+                        <p style='background-color: #c51f1f;' class='subpixel-antialiased text-white break-words font-black text-lg text-left'>{{log.0}}</p>
+                    {% else %}
+                        <p style='background-color: {{log.1}};' class='subpixel-antialiased text-white break-words font-black text-lg text-left'>{{log.0}}</p>
+                    {% endif %}
+                                  
+                {% endfor %}
+                -->
