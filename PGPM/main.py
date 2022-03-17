@@ -43,6 +43,7 @@ creaLog = scr.LogScreen()
 creaFilter = scr.FilterScreen()
 creaEditor = scr.EditorAgente()
 creaConfig = scr.ConfigScreen()
+creaProfile = scr.ProfileScreen()
 creaNewUser = scr.NewUserController()
 
 creaBackend = scr.BackendScreen()
@@ -62,6 +63,7 @@ jp.Route('/start/', creaStart.startScreen)
 jp.Route('/log/', creaLog.logScreen)
 jp.Route('/filter/', creaFilter.filterScreen)
 jp.Route('/config/', creaConfig.configScreen)
+jp.Route('/profile/', creaProfile.profileScreen)
 jp.Route('/config/newUser/', creaNewUser.newUserController)
 jp.Route('/backend/', creaBackend.backendScreen)
 jp.Route('/backend/gestioneUtente/', gestioneUtente.backendUtenteScreen)
@@ -86,3 +88,4 @@ print('Si procede anche qui?')
 #jp.justpy(screen.startScreen) #la pagina iniziale è quella di start, ma potrebbe essere cambiata
 print('fine del programma')
 ###Fine
+
