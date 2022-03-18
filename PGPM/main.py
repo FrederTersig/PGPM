@@ -28,10 +28,7 @@ gestioneAgente = scr.BackendAgenteScreen()
 
 
 print('Procedo con le route')
-#jp.Route('/start',creaStart.startScreen)
-#jp.Route('/filter',creaFilter.filterScreen)
-#jp.Route('/log',creaLog.logScreen)
-#jp.Route('/editor/{name}', mostraEditor.editorAgente)
+
 
 jp.Route('/start/', creaStart.startScreen)
 jp.Route('/log/', creaLog.logScreen)
