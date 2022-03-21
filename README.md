@@ -10,4 +10,4 @@ Interfaccia grafica per la gestione del funzionamento di un sistema multiagente 
 Interfaccia grafica per la gestione del funzionamento di un sistema multiagente sviluppata in Django+HTMX.
 
 ### Handler
-Classe che mi permette di gestire i Thread all'interno delle due interfacce grafiche.
+Classe che gestisce Thread all'interno delle due interfacce grafiche.
