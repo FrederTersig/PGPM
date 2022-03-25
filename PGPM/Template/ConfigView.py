@@ -176,45 +176,32 @@ def ConfigView(dirs,runs,loginEvent,savePathEvent,logoutEvent,sceltaRunCanc,scel
 		else:
 			jp.P(a=loadFirstSec, text='Nessuna Directory usata.', classes='text-white font-black text-left')
 		#Ultima sezione di gestione Run
-		partRun = jp.Div(a=formFrameDiv,classes='block border m-10 p-2 flex flex-row')
+		flexRun = jp.Div(a=formFrameDiv, classes='flex justify-around')
+		partRun = jp.Div(a=flexRun,classes='block border m-10 p-2 flex flex-row') #part run
 		partDeleteRun = jp.Div(a=partRun, classes='inline-block border basis-1/2 w-full')
 		jp.P(a=partDeleteRun, text='Cancella Specifica Run',classes='text-white font-black text-left px-6 py-2 text-2xl subpixel-antialiased')
-		pDR_Div = jp.Div(a=partDeleteRun, classes='flex flex-row items-center p-4 w-full')
+		pDR_Div = jp.Div(a=partDeleteRun, classes='flex flex-row items-center p-4')
 		pDR_first = jp.Div(a=pDR_Div, classes='basis-5/6 w-full p-2')
-		
-		pDR_Second = jp.Div(a=pDR_Div,classes='basis-1/6 w-3/6 mr-4')
 		if runs:
-			cancellaRunForm = jp.Form(a=pDR_Second,method='get', id='cancellaRunForm', classes='inline-block w-full')
+			
+			# Qui select
 			runSelect = jp.Select(a=pDR_first, classes='inline-block', form='cancellaRunForm')
 			####
 			for run in runs:
 				stringa = 'ID: '+str(run.getId())+' TIMESTAMP: '+run.getTimestamp()+'UTENTE_ID: '+str(run.getUtente_id())+' DIRECTORY_ID: '+str(run.getDirectory_id())
 				runSelect.add(jp.Option(value=run.getId(), text=stringa, classes='font-black'))
+			###
+			pDR_Second = jp.Div(a=pDR_Div,classes='basis-1/6 w-3/6 mr-4')
+			#if runs:
+			cancellaRunForm = jp.Form(a=pDR_Second,method='get', id='cancellaRunForm', classes='inline-block w-full')
+				
 			inputDelRunForm = jp.Input(a=cancellaRunForm,type='submit', value='cancella', classes='block rounded w-full h-16 m-2 bg-blue-600 text-white hover:bg-white focus:outline-white hover:text-gray-800 flex flex-row items-center', style='width:70px;')
 		else:
 			jp.P(a=pDR_first, text='Nessuna Run eseguita.',classes='text-white font-black text-left')
-		partDeleteEachRun = jp.Div(a=partRun,classes='inline-block border basis-1/2 w-full')
-		jp.P(a=partDeleteEachRun, text='Cancella Ogni Run',classes='text-white font-black text-left px-6 py-2 text-2xl subpixel-antialiased')
-		PDER_Div = jp.Div(a=partDeleteEachRun, classes='flex flex-row items-center p-4')
-		PDER_first = jp.Div(a=PDER_Div, classes='basis-5/6 w-full p-2')
-
 
 	#Fine sezioni complesse
 	########################
 	########################
-
-	#IMPORTANTE#
-	#In questo punto ci sarà una condizione che mi permetterà di visualizzare le directory inserite da un'utente e gestirle
-
-
-	####### -------> Fine Parte Centrale: Configurazione
-
-	####### -------> Parte Destra: Tasti di gestione del db
-	#Menu Destro (Tasto del filtro)
-	#configNavDiv = jp.Div(a=mainDiv,classes='h-64 inline-block w-22') #Aumento la width così da sistemare al meglio la posizione dei bottoni
-
-	#Primo Bottone
-	#newUserButton = jp.A(href='/config/newUser/', a=configNavDiv, classes=buttonClasses, inner_html=newUserIcon())
 
 		
 	return wp

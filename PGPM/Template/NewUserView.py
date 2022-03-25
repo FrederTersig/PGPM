@@ -32,19 +32,19 @@ def NewUserView(creaUtente,s):
 	wp.body_style='overflow:hidden'
 	mainDiv = jp.Div(a=wp,classes='box-content bg-gray-700 h-screen border-4 w-screen flex')   
 	####### -------> Pulsantiera Sinistra
-	subNavDiv = jp.Div(a=mainDiv,classes='h-64 inline-block left-0')
+	#subNavDiv = jp.Div(a=mainDiv,classes='h-64 inline-block left-0')
 	#- icona per il tasto del menu start -#
 	#initButtonNav = jp.Div(a=subNavDiv, classes=buttonClasses)
-	initButtonNav = jp.A(href='/start/', a=subNavDiv, classes=buttonClasses, inner_html=startIcon())
+	#initButtonNav = jp.A(href='/start/', a=subNavDiv, classes=buttonClasses, inner_html=startIcon())
 	#- icona per il tasto del menu log -# -- DISABILITATO
-	filterButton = jp.A(href='/filter/', a=subNavDiv, classes=buttonClasses, inner_html=filtroIcon())
+	#filterButton = jp.A(href='/filter/', a=subNavDiv, classes=buttonClasses, inner_html=filtroIcon())
 	#- icona per il tasto di configurazione -#
-	configButtonNav = jp.A(href='/config/', a=subNavDiv, classes=buttonClasses, inner_html=configIcon())
+	#configButtonNav = jp.A(href='/config/', a=subNavDiv, classes=buttonClasses, inner_html=configIcon())
 	#- icona per il tasto di Backend -# VISTO SOLO DA ADMIN
-	if s['logged_in']:
-		profileButtonNav = jp.A(href='/profile/',a=subNavDiv, classes=buttonClasses, inner_html=profileIcon())
-		if s['utente'][4] == 1:
-			backendButtonNav = jp.A(href='/backend/', a=subNavDiv, classes=buttonClasses, inner_html=backendIcon())
+	#if s['logged_in']:
+	#	profileButtonNav = jp.A(href='/profile/',a=subNavDiv, classes=buttonClasses, inner_html=profileIcon())
+	#	if s['utente'][4] == 1:
+	#		backendButtonNav = jp.A(href='/backend/', a=subNavDiv, classes=buttonClasses, inner_html=backendIcon())
 	####### -------> Fine Pulsantiera Sinistra
 
 	####### -------> Parte Centrale: Creazione Nuovo Utente
@@ -56,12 +56,17 @@ def NewUserView(creaUtente,s):
 	spanTitleFrame = jp.Span(a=titleFrameDiv, classes='align-middle')
 	jp.P(a=spanTitleFrame, classes='text-center font-black text-3xl subpixel-antialiased text-white', text='Registra Nuovo Utente')
 	#Parte centrale della creazione nuovo utente  
+	
+
 
 	## CREAZIONE NUOVO UTENTE ##
-	newUserDiv = jp.Div(a=subFrameDiv, style=f'height:80%; width:100%', classes='block divide-y divide-white divide-opacity-25 w-full bg-blue-900 space-y-2 overflow-y-scroll p-2 border-2 border-white rounded-md')
+	newUserDiv = jp.Div(a=subFrameDiv, style=f'height:80%; width:100%', classes='block w-full bg-blue-900 space-y-2 overflow-y-scroll p-2 border-2 border-white rounded-md')
 
-	newUserForm = jp.Form(a=newUserDiv, classes='block border m-10 p-2 flex justify-center items-center', style='height:80%')
-
+	divFirst = jp.Div(a=newUserDiv, classes='pt-36 flex justify-around')
+	divSecond = jp.Div(a=divFirst, classes='block border m-2 p-2 flex')
+	divThird = jp.Div(a=divSecond, classes='block border w-full')
+	jp.P(a=divThird, classes='text-white font-black text-center px-6 py-2 text-2xl subpixel-antialiased', text='Compila i campi')
+	newUserForm = jp.Form(a=divThird, classes='block p-2 flex  items-center', style='height:80%; width:80%;')
 	groupADiv =jp.Div(a=newUserForm, classes='p-4')
 
 	nomeLabel = jp.Label(text='Nickname: ', a=groupADiv, classes='text-white font-black px-4')
@@ -72,20 +77,22 @@ def NewUserView(creaUtente,s):
 	emailInput = jp.Input(placeholder='Email', a=groupADiv, classes='fblock form-input px-4')
 	emailLabel.for_component = emailInput
 	
-	groupBDiv =jp.Div(a=newUserForm, classes='p-4')
-	passwordLabel = jp.Label(text='Password: ', a=groupBDiv, classes='text-white font-black px-4')
-	passwordInput = jp.Input(placeholder='Password', a=groupBDiv, classes='block form-input px-4',type='password')
+	passwordLabel = jp.Label(text='Password: ', a=groupADiv, classes='text-white font-black px-4')
+	passwordInput = jp.Input(placeholder='Password', a=groupADiv, classes='block form-input px-4',type='password')
 	passwordLabel.for_component = passwordInput
 
-	confPasswordLabel = jp.Label(text='Conferma Password: ', a=groupBDiv, classes='text-white font-black px-4')
-	confPasswordInput = jp.Input(placeholder='Conferma Password', a=groupBDiv, classes='block form-input px-4',type='password')
+	confPasswordLabel = jp.Label(text='Conferma Password: ', a=groupADiv, classes='text-white font-black px-4')
+	confPasswordInput = jp.Input(placeholder='Conferma Password', a=groupADiv, classes='block form-input px-4',type='password')
 	confPasswordLabel.for_component = confPasswordInput                                      
 
-	newUserButton = jp.Input(value='Registra Nuovo Utente', type='submit', a=newUserForm, classes=buttonClasses + 'block', style='width:50%')
+	divFourth = jp.Div(a=newUserForm, classes='w-full')
+	newUserButton = jp.Input(value='Crea Nuovo Utente', type='submit', a=newUserForm, classes='rounded w-48 h-32 m-2 bg-blue-600 text-white hover:bg-white focus:outline-white hover:text-gray-800')
 
 	newUserForm.on('submit', creaUtente)
 	####### -------> Fine Parte Centrale
 
+	divUltButton = jp.Div(a=subFrameDiv, classes='block flex justify-around h-24 w-full')
+	ultButton = jp.A(a=divUltButton,href='/config/', classes='block rounded w-32 h-16 m-2 bg-blue-600 text-white text-center hover:bg-white focus:outline-white hover:text-gray-800', text='Torna Indietro')
 
 	####### -------> Parte Destra: Tasti di gestione del db
 	#Menu Destro (Tasto del filtro)
