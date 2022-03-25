@@ -260,9 +260,9 @@ def showLog(request):
 			#print(data.split('|')[1])
 			logText = data.split('|')[1]
 			#if agenti[chiaveAgente][2] == 1:
-			#	coloreAgente=agenti[chiaveAgente][0]#<--prendo il colore
+			coloreAgente=agenti[chiaveAgente][0]#<--prendo il colore
 
-			#	output.append([logText,coloreAgente])
+			output.append([logText,coloreAgente])
 			logging.info(logText)
 			#print(data+'\n', ' ========= ', stopBool)
 	else:
